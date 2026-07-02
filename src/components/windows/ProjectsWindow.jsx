@@ -62,6 +62,41 @@ export default function ProjectsWindow() {
     setActiveFile(null)
   }
 
+  const renderDetailsText = (text) => {
+    if (!text) return null;
+    const lines = text.split('\n');
+    const elements = [];
+    let currentList = [];
+    
+    const flushList = () => {
+      if (currentList.length > 0) {
+        elements.push(
+          <ul style={{ color: '#ccc', margin: '8px 0', paddingLeft: '20px', fontSize: '14px' }} key={`list-${elements.length}`}>
+            {currentList.map((item, idx) => <li key={idx} style={{ marginBottom: '4px' }}>{item}</li>)}
+          </ul>
+        );
+        currentList = [];
+      }
+    };
+    
+    lines.forEach((line, idx) => {
+      const trimmed = line.trim();
+      if (trimmed.startsWith('* ') || trimmed.startsWith('- ')) {
+        currentList.push(trimmed.substring(2));
+      } else {
+        flushList();
+        if (trimmed === '') {
+          elements.push(<div style={{ height: '8px' }} key={`space-${idx}`}></div>);
+        } else {
+          elements.push(<div key={`text-${idx}`} style={{ color: '#ccc', fontSize: '14px', lineHeight: '1.6' }}>{line}</div>);
+        }
+      }
+    });
+    flushList();
+    
+    return <div>{elements}</div>;
+  }
+
   // If a file is open, show the details view
   if (activeFile) {
     const p = activeFile
@@ -109,7 +144,7 @@ export default function ProjectsWindow() {
                 <div style={{ color: '#888' }}>No details provided.</div>
               )
             ) : p.details ? (
-              <div style={{ whiteSpace: 'pre-wrap' }}>{p.details}</div>
+              renderDetailsText(p.details)
             ) : (
               <div style={{ color: '#888' }}>No details provided.</div>
             )}
@@ -210,9 +245,7 @@ export default function ProjectsWindow() {
                       ))}
                     </ul>
                   ) : typeof currentFolder.details === 'string' && currentFolder.details.length > 0 ? (
-                    <div style={{ color: '#ccc', fontSize: '14px', whiteSpace: 'pre-wrap', lineHeight: '1.6' }}>
-                      {currentFolder.details}
-                    </div>
+                    renderDetailsText(currentFolder.details)
                   ) : null
                 ) : null}
               </div>
