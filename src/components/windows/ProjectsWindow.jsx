@@ -133,18 +133,8 @@ export default function ProjectsWindow() {
         <div className="wc-section">
           <div className="wc-section-label">Document Details</div>
           <div className="timeline-desc" style={{ color: '#ccc', fontSize: '14px', lineHeight: '1.6' }}>
-            {Array.isArray(p.details) ? (
-              p.details.length > 0 ? (
-                <ul style={{ margin: 0, paddingLeft: '20px' }}>
-                  {p.details.map((detail, idx) => (
-                    <li key={idx} style={{ marginBottom: '4px' }}>{detail}</li>
-                  ))}
-                </ul>
-              ) : (
-                <div style={{ color: '#888' }}>No details provided.</div>
-              )
-            ) : p.details ? (
-              renderDetailsText(p.details)
+            {p.details && p.details.length > 0 ? (
+              renderDetailsText(Array.isArray(p.details) ? p.details.join('\n') : p.details)
             ) : (
               <div style={{ color: '#888' }}>No details provided.</div>
             )}
@@ -237,16 +227,8 @@ export default function ProjectsWindow() {
                   </div>
                 )}
 
-                {currentFolder.details ? (
-                  Array.isArray(currentFolder.details) && currentFolder.details.length > 0 ? (
-                    <ul style={{ color: '#ccc', margin: 0, paddingLeft: '20px', fontSize: '14px' }}>
-                      {currentFolder.details.map((detail, idx) => (
-                        <li key={idx} style={{ marginBottom: '4px' }}>{detail}</li>
-                      ))}
-                    </ul>
-                  ) : typeof currentFolder.details === 'string' && currentFolder.details.length > 0 ? (
-                    renderDetailsText(currentFolder.details)
-                  ) : null
+                {currentFolder.details && currentFolder.details.length > 0 ? (
+                  renderDetailsText(Array.isArray(currentFolder.details) ? currentFolder.details.join('\n') : currentFolder.details)
                 ) : null}
               </div>
             )
