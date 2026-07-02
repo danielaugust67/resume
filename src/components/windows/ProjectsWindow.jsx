@@ -4,7 +4,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore'
 
 export default function ProjectsWindow() {
   const [nodes, setNodes] = useState([])
-  
+
   // File explorer state
   const [currentFolderId, setCurrentFolderId] = useState(null)
   const [breadcrumbs, setBreadcrumbs] = useState([{ id: null, name: "Root" }])
@@ -20,14 +20,14 @@ export default function ProjectsWindow() {
       )
       const querySnapshot = await getDocs(q)
       const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-      
+
       // Sort: folders first, then files
       data.sort((a, b) => {
         if (a.type === "folder" && b.type !== "folder") return -1;
         if (a.type !== "folder" && b.type === "folder") return 1;
         return a.name.localeCompare(b.name);
       });
-      
+
       setNodes(data)
     } catch (error) {
       console.error("Error fetching project nodes:", error)
@@ -67,7 +67,7 @@ export default function ProjectsWindow() {
     const lines = text.split('\n');
     const elements = [];
     let currentList = [];
-    
+
     const flushList = () => {
       if (currentList.length > 0) {
         elements.push(
@@ -78,7 +78,7 @@ export default function ProjectsWindow() {
         currentList = [];
       }
     };
-    
+
     lines.forEach((line, idx) => {
       const trimmed = line.trim();
       if (trimmed.startsWith('* ') || trimmed.startsWith('- ')) {
@@ -93,7 +93,7 @@ export default function ProjectsWindow() {
       }
     });
     flushList();
-    
+
     return <div>{elements}</div>;
   }
 
@@ -102,8 +102,8 @@ export default function ProjectsWindow() {
     const p = activeFile
     return (
       <div className="wc-body" style={{ overflowY: 'auto', height: '100%' }}>
-        <button 
-          className="back-btn" 
+        <button
+          className="back-btn"
           onClick={closeFile}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -153,10 +153,10 @@ export default function ProjectsWindow() {
 
         {p.href && p.href !== '#' && (
           <div style={{ marginTop: '20px' }}>
-            <a 
-              href={p.href} 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href={p.href}
+              target="_blank"
+              rel="noopener noreferrer"
               className="resume-download"
             >
               Open External Link
@@ -175,10 +175,10 @@ export default function ProjectsWindow() {
   // File explorer view
   return (
     <div className="wc-body" style={{ overflowY: 'auto', height: '100%', display: 'flex', flexDirection: 'column' }}>
-      
+
       {/* File Explorer Header & Breadcrumbs */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px', paddingBottom: '16px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-        <button 
+        <button
           onClick={navigateUp}
           disabled={breadcrumbs.length <= 1}
           style={{
@@ -188,10 +188,10 @@ export default function ProjectsWindow() {
           }}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
+            <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
         </button>
-        
+
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#aaa', overflowX: 'auto', whiteSpace: 'nowrap' }}>
           {breadcrumbs.map((crumb, idx) => (
             <span key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -228,7 +228,7 @@ export default function ProjectsWindow() {
                   )}
                 </div>
                 {currentFolder.desc && <p style={{ color: '#aaa', margin: '0 0 12px 0', fontSize: '14px' }}>{currentFolder.desc}</p>}
-                
+
                 {currentFolder.tech && currentFolder.tech.length > 0 && (
                   <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '12px' }}>
                     {currentFolder.tech.map(t => (
