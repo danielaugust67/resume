@@ -97,14 +97,23 @@ export default function ProjectsWindow() {
 
         <div className="wc-section">
           <div className="wc-section-label">Document Details</div>
-          <ul className="timeline-desc">
-            {p.details && p.details.map((detail, idx) => (
-              <li key={idx}>{detail}</li>
-            ))}
-            {(!p.details || p.details.length === 0) && (
-              <li style={{ color: '#888' }}>No details provided.</li>
+          <div className="timeline-desc" style={{ color: '#ccc', fontSize: '14px', lineHeight: '1.6' }}>
+            {Array.isArray(p.details) ? (
+              p.details.length > 0 ? (
+                <ul style={{ margin: 0, paddingLeft: '20px' }}>
+                  {p.details.map((detail, idx) => (
+                    <li key={idx} style={{ marginBottom: '4px' }}>{detail}</li>
+                  ))}
+                </ul>
+              ) : (
+                <div style={{ color: '#888' }}>No details provided.</div>
+              )
+            ) : p.details ? (
+              <div style={{ whiteSpace: 'pre-wrap' }}>{p.details}</div>
+            ) : (
+              <div style={{ color: '#888' }}>No details provided.</div>
             )}
-          </ul>
+          </div>
         </div>
 
         {p.href && p.href !== '#' && (
@@ -193,13 +202,19 @@ export default function ProjectsWindow() {
                   </div>
                 )}
 
-                {currentFolder.details && currentFolder.details.length > 0 && (
-                  <ul style={{ color: '#ccc', margin: 0, paddingLeft: '20px', fontSize: '14px' }}>
-                    {currentFolder.details.map((detail, idx) => (
-                      <li key={idx} style={{ marginBottom: '4px' }}>{detail}</li>
-                    ))}
-                  </ul>
-                )}
+                {currentFolder.details ? (
+                  Array.isArray(currentFolder.details) && currentFolder.details.length > 0 ? (
+                    <ul style={{ color: '#ccc', margin: 0, paddingLeft: '20px', fontSize: '14px' }}>
+                      {currentFolder.details.map((detail, idx) => (
+                        <li key={idx} style={{ marginBottom: '4px' }}>{detail}</li>
+                      ))}
+                    </ul>
+                  ) : typeof currentFolder.details === 'string' && currentFolder.details.length > 0 ? (
+                    <div style={{ color: '#ccc', fontSize: '14px', whiteSpace: 'pre-wrap', lineHeight: '1.6' }}>
+                      {currentFolder.details}
+                    </div>
+                  ) : null
+                ) : null}
               </div>
             )
           })()

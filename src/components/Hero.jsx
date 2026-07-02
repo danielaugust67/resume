@@ -1,4 +1,5 @@
 import profilePhoto from '../assets/img (2).png'
+import Image from 'next/image'
 
 const floatingCards = [
   {
@@ -38,10 +39,12 @@ export default function Hero() {
     <section className="hero-section" id="hero">
       <div className="hero-image">
         <div className="hero-blob" />
-        <img
-          src={profilePhoto.src}
+        <Image
+          src={profilePhoto}
           alt="Daniel Augustian Girsang"
           className="hero-avatar"
+          placeholder="blur"
+          priority
         />
       </div>
 

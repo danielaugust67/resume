@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { db } from '@/lib/firebase'
 import { doc, getDoc } from 'firebase/firestore'
 import profilePhoto from '../../assets/profile.png'
+import Image from 'next/image'
+
 
 export default function AboutWindow() {
   const [profile, setProfile] = useState({
@@ -37,7 +39,7 @@ export default function AboutWindow() {
   return (
     <div className="wc-body" style={{ overflowY: 'auto', height: '100%' }}>
       <div className="about-hero">
-        <img src={profilePhoto.src} alt="Profile" className="about-avatar" />
+        <Image src={profilePhoto} alt="Profile" className="about-avatar" placeholder="blur" />
         <div>
           <div className="about-name">{profile.name}</div>
           <div className="about-role">{profile.role}</div>

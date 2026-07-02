@@ -8,7 +8,7 @@ import SkillsWindow from './windows/SkillsWindow'
 import ContactWindow from './windows/ContactWindow'
 import Widgets from './Widgets'
 import profilePhoto from '../assets/profile.png'
-
+import Image from 'next/image'
 const FolderSVG = (
   <svg viewBox="0 0 24 24" fill="currentColor" width="100%" height="100%">
     <path d="M10.4 4h9.6c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2h4.4l2 2z"/>
@@ -113,7 +113,7 @@ export default function Desktop() {
       {/* Desktop area */}
       <div className="desktop" onClick={handleDesktopClick}>
         {/* Wallpaper */}
-        <img src={profilePhoto.src} className="wallpaper" alt="" aria-hidden="true" />
+        <Image src={profilePhoto} className="wallpaper" alt="Wallpaper" aria-hidden="true" placeholder="blur" priority />
         <div className="wallpaper-overlay" aria-hidden="true" />
 
         {/* Widgets on the side */}

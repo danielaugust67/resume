@@ -69,7 +69,7 @@ export default function AdminProjects() {
       href: form.href || "",
       image: form.image || "",
       tech: form.tech ? form.tech.split(",").map(t => t.trim()).filter(Boolean) : [],
-      details: form.details ? form.details.split("\n").filter(d => d.trim() !== "") : []
+      details: form.details || ""
     };
 
     if (editingId) {
@@ -91,7 +91,7 @@ export default function AdminProjects() {
       icon: node.icon || "",
       bg: node.bg || "",
       tech: node.tech ? node.tech.join(", ") : "",
-      details: node.details ? node.details.join("\n") : "",
+      details: Array.isArray(node.details) ? node.details.join("\n") : (node.details || ""),
       image: node.image || ""
     });
     setEditingId(node.id);
@@ -245,8 +245,8 @@ export default function AdminProjects() {
                   <input type="text" placeholder="React, Node.js, Tailwind" value={form.tech} onChange={e => setForm({...form, tech: e.target.value})} className={inputClass} />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-zinc-400 mb-1.5">Details / Features (One per line)</label>
-                  <textarea placeholder="- Designed architecture&#10;- Implemented Auth" value={form.details} onChange={e => setForm({...form, details: e.target.value})} className={`${inputClass} min-h-[100px] resize-y`} />
+                  <label className="block text-sm font-medium text-zinc-400 mb-1.5">Details / Features (Free text)</label>
+                  <textarea placeholder="Loom adalah platform forum diskusi modern..." value={form.details} onChange={e => setForm({...form, details: e.target.value})} className={`${inputClass} min-h-[150px] resize-y`} />
                 </div>
               </div>
 
